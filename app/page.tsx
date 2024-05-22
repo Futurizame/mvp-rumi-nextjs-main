@@ -4,10 +4,10 @@ export default async function Home() {
   const [ok, character, error] = await rickAndMortyHandler(1);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex flex-col items-center p-24">
       <p>Home Page</p>
       {ok ? (
-        <div>
+        <div className="flex flex-col p-4 gap-2">
           <p>{character.id}</p>
           <p>{character.name}</p>
           <p>{character.status}</p>
