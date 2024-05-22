@@ -9,5 +9,9 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": true
+  },
+  "rules": {
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/no-floating-promises": "off"
   }
 }
