@@ -1,4 +1,23 @@
-export default function Form() {
+import { PreRegisterFormData } from "../../../src/domain/preregistation/types";
+import { preRegisterHandler } from "../../../src/adapter/input/pre-register";
+
+export default async function Form() {
+  const handleFormSubmit = async () => {
+    const data: PreRegisterFormData = {
+      name: "Will",
+      email: "something@dev.com",
+      phone: "1234567890",
+      idDocument: "1234567890",
+      investmentQuantity: 1000,
+      investmentTime: 12,
+      goal: "Retirement",
+    };
+
+    await preRegisterHandler(data);
+  };
+
+  await handleFormSubmit();
+
   return (
     <form>
       {/* Campo para el nombre completo */}
