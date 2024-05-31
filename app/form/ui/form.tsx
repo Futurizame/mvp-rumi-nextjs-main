@@ -1,10 +1,10 @@
 "use client";
+
 import { useState, ChangeEvent, FormEvent } from "react";
 import { PreRegisterFormData } from "../../../src/domain/preregistation/types";
 import { preRegisterHandler } from "../../../src/adapter/input/pre-register";
 
 const Form = () => {
-  // Estado local para almacenar los valores de los campos del formulario
   const [formData, setFormData] = useState<PreRegisterFormData>({
     name: "",
     email: "",
@@ -15,7 +15,6 @@ const Form = () => {
     goal: "",
   });
 
-  // Función para manejar cambios en los campos del formulario
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
@@ -26,7 +25,6 @@ const Form = () => {
     }));
   };
 
-  // Función para manejar el envío del formulario
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevenir el comportamiento de envío predeterminado del formulario
 
