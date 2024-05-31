@@ -1,27 +1,49 @@
+"use client";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { PreRegisterFormData } from "../../../src/domain/preregistation/types";
 import { preRegisterHandler } from "../../../src/adapter/input/pre-register";
 
-export default async function Form() {
-  const handleFormSubmit = async () => {
-    const data: PreRegisterFormData = {
-      name: "Will",
-      email: "something@dev.com",
-      phone: "1234567890",
-      idDocument: "1234567890",
-      investmentQuantity: 1000,
-      investmentTime: 12,
-      goal: "Retirement",
-    };
+const Form = () => {
+  // Estado local para almacenar los valores de los campos del formulario
+  const [formData, setFormData] = useState<PreRegisterFormData>({
+    name: "",
+    email: "",
+    phone: "",
+    idDocument: "",
+    investmentQuantity: 0,
+    investmentTime: 0,
+    goal: "",
+  });
 
-    await preRegisterHandler(data);
+  // Función para manejar cambios en los campos del formulario
+  const handleInputChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
-  await handleFormSubmit();
+  // Función para manejar el envío del formulario
+  const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevenir el comportamiento de envío predeterminado del formulario
+
+    try {
+      // Enviar los datos al backend
+      await preRegisterHandler(formData);
+      console.log("Datos enviados exitosamente:", formData);
+    } catch (error) {
+      console.error("Error al enviar los datos:", error);
+    }
+  };
 
   return (
-    <form>
-      {/* Campo para el nombre completo */}
+    <form onSubmit={handleFormSubmit}>
+      {/* Campos del formulario */}
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
+        {/* Campo para el nombre completo */}
         <div className="mb-4">
           <label htmlFor="name" className="block text-sm font-medium">
             Nombre completo
@@ -31,8 +53,9 @@ export default async function Form() {
             name="name"
             type="text"
             placeholder="Ingrese su nombre completo"
+            value={formData.name}
+            onChange={handleInputChange}
             className="w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder-gray-500"
-            aria-describedby="amount-error"
           />
         </div>
 
@@ -46,6 +69,8 @@ export default async function Form() {
             name="email"
             type="email"
             placeholder="Ingrese su correo electrónico"
+            value={formData.email}
+            onChange={handleInputChange}
             className="w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder-gray-500"
           />
         </div>
@@ -60,6 +85,8 @@ export default async function Form() {
             name="phone"
             type="tel"
             placeholder="Ingrese su número de teléfono"
+            value={formData.phone}
+            onChange={handleInputChange}
             className="w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder-gray-500"
           />
         </div>
@@ -74,9 +101,11 @@ export default async function Form() {
           </label>
           <input
             id="investmentAmount"
-            name="investmentAmount"
+            name="investmentQuantity"
             type="number"
             placeholder="Ingrese la cantidad deseada"
+            value={formData.investmentQuantity}
+            onChange={handleInputChange}
             className="w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder-gray-500"
           />
         </div>
@@ -88,9 +117,11 @@ export default async function Form() {
           </label>
           <input
             id="investmentTerm"
-            name="investmentTerm"
+            name="investmentTime"
             type="number"
             placeholder="Ingrese el plazo en meses"
+            value={formData.investmentTime}
+            onChange={handleInputChange}
             className="w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder-gray-500"
           />
         </div>
@@ -102,7 +133,9 @@ export default async function Form() {
           </label>
           <select
             id="investmentGoal"
-            name="investmentGoal"
+            name="goal"
+            value={formData.goal}
+            onChange={handleInputChange}
             className="w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2"
           >
             <option value="">Seleccione una opción</option>
@@ -122,4 +155,6 @@ export default async function Form() {
       </button>
     </form>
   );
-}
+};
+
+export default Form;

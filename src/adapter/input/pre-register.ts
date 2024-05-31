@@ -1,3 +1,4 @@
+"use server";
 import { Optional } from "../../domain/shared/try-fn";
 import {
   PreRegisterFormData,
