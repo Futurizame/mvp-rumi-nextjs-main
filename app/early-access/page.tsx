@@ -1,6 +1,6 @@
 import Form from "./ui/form";
 
-export default function Page() {
+export default function EarlyAccess() {
   return (
     <main>
       <Form />
