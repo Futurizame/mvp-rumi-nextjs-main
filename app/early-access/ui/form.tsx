@@ -1,44 +1,74 @@
 "use client";
 
 import { useState, ChangeEvent, FormEvent } from "react";
-import { PreRegisterFormData } from "../../../src/domain/preregistation/types";
 import { preRegisterHandler } from "../../../src/adapter/input/pre-register";
-
-type FormState = "form" | "loading" | "success" | "error";
+import { TextInput } from "./text-input";
+import {
+  FormState,
+  initialErrorData,
+  initialFormData,
+  mapToPreRegisterFormData,
+  PageState,
+  validateForm,
+  validateFormField,
+} from "../utilities/form";
 
 const Form = () => {
-  const [formData, setFormData] = useState<PreRegisterFormData>({
-    name: "",
-    email: "",
-    phone: "",
-    idDocument: "",
-    investmentQuantity: 0,
-    investmentTime: 0,
-    goal: "",
+  const [pageState, setPageState] = useState<PageState>("form");
+  const [formState, setFormState] = useState<FormState>({
+    form: initialFormData,
+    errors: initialErrorData,
   });
-  const [state, setState] = useState<FormState>("form");
 
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+
+    setFormState((previousFormState) => {
+      const newFormData = {
+        ...previousFormState.form,
+        [name]: value,
+      };
+
+      const errorMessage = validateFormField(name, value);
+
+      console.log(newFormData);
+
+      return {
+        form: newFormData,
+        errors: {
+          ...previousFormState.errors,
+          [name]: errorMessage,
+        },
+      };
+    });
   };
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setState("loading");
+    const { isError, errorData } = validateForm(formState.form);
+
+    if (isError) {
+      setFormState((previousFormState) => ({
+        ...previousFormState,
+        errors: errorData,
+      }));
+
+      return;
+    }
+
+    setPageState("loading");
+
+    const formData = mapToPreRegisterFormData(formState.form);
 
     const [ok] = await preRegisterHandler(formData);
 
-    setState(ok ? "success" : "error");
+    setPageState(ok ? "success" : "error");
   };
 
-  if (state === "loading") {
+  if (pageState === "loading") {
     return (
       <div className="text-center">
         <p>Enviando...</p>
@@ -46,7 +76,7 @@ const Form = () => {
     );
   }
 
-  if (state === "success") {
+  if (pageState === "success") {
     return (
       <div className="text-center">
         <p>¡Gracias por registrarte!</p>
@@ -54,7 +84,7 @@ const Form = () => {
     );
   }
 
-  if (state === "error") {
+  if (pageState === "error") {
     return (
       <div className="text-center">
         <p>Ha ocurrido un error. Por favor, intenta de nuevo.</p>
@@ -63,91 +93,59 @@ const Form = () => {
   }
 
   return (
-    <form onSubmit={handleFormSubmit}>
-      {/* Campos del formulario */}
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Campo para el nombre completo */}
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-medium">
-            Nombre completo
-          </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            placeholder="Ingrese su nombre completo"
-            value={formData.name}
-            onChange={handleInputChange}
-            className="w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder-gray-500"
-          />
-        </div>
+    <form
+      onSubmit={handleFormSubmit}
+      className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden"
+    >
+      <div className="rounded-md p-4 flex flex-col">
+        <TextInput
+          className="mb-4"
+          name="name"
+          label="Nombre completo"
+          value={formState.form.name}
+          onChange={handleInputChange}
+          errorMessage={formState.errors.name}
+        />
 
-        {/* Campo para el correo electrónico */}
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium">
-            Correo electrónico
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Ingrese su correo electrónico"
-            value={formData.email}
-            onChange={handleInputChange}
-            className="w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder-gray-500"
-          />
-        </div>
+        <TextInput
+          className="mb-4"
+          name="email"
+          label="Correo electrónico"
+          value={formState.form.email}
+          onChange={handleInputChange}
+          onValidate={validateFormField}
+          errorMessage={formState.errors.email}
+        />
 
-        {/* Campo para el número de teléfono */}
-        <div className="mb-4">
-          <label htmlFor="phone" className="block text-sm font-medium">
-            Número de teléfono
-          </label>
-          <input
-            id="phone"
-            name="phone"
-            type="tel"
-            placeholder="Ingrese su número de teléfono"
-            value={formData.phone}
-            onChange={handleInputChange}
-            className="w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder-gray-500"
-          />
-        </div>
+        <TextInput
+          className="mb-4"
+          name="phone"
+          label="Número de teléfono"
+          value={formState.form.phone}
+          onChange={handleInputChange}
+          onValidate={validateFormField}
+          errorMessage={formState.errors.phone}
+        />
 
-        {/* Campo para la cantidad de inversión deseada */}
-        <div className="mb-4">
-          <label
-            htmlFor="investmentAmount"
-            className="block text-sm font-medium"
-          >
-            Cantidad de inversión deseada
-          </label>
-          <input
-            id="investmentAmount"
-            name="investmentQuantity"
-            type="number"
-            placeholder="Ingrese la cantidad deseada"
-            value={formData.investmentQuantity}
-            onChange={handleInputChange}
-            className="w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder-gray-500"
-          />
-        </div>
+        <TextInput
+          className="mb-4"
+          name="investmentQuantity"
+          label="Cantidad de inversión deseada"
+          value={formState.form.investmentQuantity}
+          onChange={handleInputChange}
+          onValidate={validateFormField}
+          errorMessage={formState.errors.investmentQuantity}
+        />
 
-        {/* Campo para el plazo de inversión */}
-        <div className="mb-4">
-          <label htmlFor="investmentTerm" className="block text-sm font-medium">
-            Plazo de inversión (en meses)
-          </label>
-          <input
-            id="investmentTerm"
-            name="investmentTime"
-            type="number"
-            placeholder="Ingrese el plazo en meses"
-            value={formData.investmentTime}
-            onChange={handleInputChange}
-            className="w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder-gray-500"
-          />
-        </div>
+        <TextInput
+          className="mb-4"
+          name="investmentTime"
+          label="Plazo de inversión (en meses)"
+          value={formState.form.investmentTime}
+          onChange={handleInputChange}
+          onValidate={validateFormField}
+          errorMessage={formState.errors.investmentTime}
+        />
 
         {/* Campo para el objetivo de inversión */}
         <div className="mb-4">
@@ -157,25 +155,30 @@ const Form = () => {
           <select
             id="investmentGoal"
             name="goal"
-            value={formData.goal}
+            value={formState.form.goal}
             onChange={handleInputChange}
-            className="w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2"
+            onBlur={(e) => validateFormField("goal", e.target.value)}
+            className={`mt-1 block w-full px-3 py-2 bg-white border ${
+              formState.errors.goal ? "border-red-600" : "border-gray-300"
+            } rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500`}
           >
             <option value="">Seleccione una opción</option>
             <option value="income">Ingresos pasivos</option>
             <option value="appreciation">Plusvalía</option>
             <option value="both">Ambos</option>
           </select>
+          {formState.errors.goal && (
+            <p className="text-red-600 text-sm">{formState.errors.goal}</p>
+          )}
         </div>
-      </div>
 
-      {/* Botón de envío */}
-      <button
-        type="submit"
-        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-      >
-        Enviar
-      </button>
+        <button
+          type="submit"
+          className="bg-gradient-to-r from-500 to-600 text-white py-2 px-4 rounded-md hover:from-600 hover:to-700"
+        >
+          Enviar
+        </button>
+      </div>
     </form>
   );
 };

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export const Logo: FC = () => {
   return (
-    <section className="p-4">
+    <section className="p-4 bg-slate-100">
       <Image
         src="/logo.png"
         width={250}
@@ -13,9 +13,9 @@ export const Logo: FC = () => {
       />
       <Image
         src="/movil.png"
-        width={100}
+        width={70}
         height={50}
-        className="block md:hidden"
+        className="block md:hidden mx-auto"
         alt="logo rumigrow"
       />
     </section>
