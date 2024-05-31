@@ -1,6 +1,6 @@
-import React from "react";
+import React, { FC } from "react";
 
-export default function About() {
+export const About: FC = () => {
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
       <div className="md:flex">
@@ -21,4 +21,4 @@ export default function About() {
       </div>
     </div>
   );
-}
+};

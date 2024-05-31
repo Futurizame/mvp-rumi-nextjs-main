@@ -4,6 +4,8 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import { PreRegisterFormData } from "../../../src/domain/preregistation/types";
 import { preRegisterHandler } from "../../../src/adapter/input/pre-register";
 
+type FormState = "form" | "loading" | "success" | "error";
+
 const Form = () => {
   const [formData, setFormData] = useState<PreRegisterFormData>({
     name: "",
@@ -14,6 +16,7 @@ const Form = () => {
     investmentTime: 0,
     goal: "",
   });
+  const [state, setState] = useState<FormState>("form");
 
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -26,16 +29,38 @@ const Form = () => {
   };
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Prevenir el comportamiento de envío predeterminado del formulario
+    event.preventDefault();
 
-    try {
-      // Enviar los datos al backend
-      await preRegisterHandler(formData);
-      console.log("Datos enviados exitosamente:", formData);
-    } catch (error) {
-      console.error("Error al enviar los datos:", error);
-    }
+    setState("loading");
+
+    const [ok] = await preRegisterHandler(formData);
+
+    setState(ok ? "success" : "error");
   };
+
+  if (state === "loading") {
+    return (
+      <div className="text-center">
+        <p>Enviando...</p>
+      </div>
+    );
+  }
+
+  if (state === "success") {
+    return (
+      <div className="text-center">
+        <p>¡Gracias por registrarte!</p>
+      </div>
+    );
+  }
+
+  if (state === "error") {
+    return (
+      <div className="text-center">
+        <p>Ha ocurrido un error. Por favor, intenta de nuevo.</p>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleFormSubmit}>

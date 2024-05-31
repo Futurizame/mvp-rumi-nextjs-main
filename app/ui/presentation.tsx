@@ -1,6 +1,6 @@
-import React from "react";
+import React, { FC } from "react";
 
-export default function Presentation() {
+export const Presentation: FC = () => {
   return (
     <div className="flex justify-center w-96">
       <iframe
@@ -13,4 +13,4 @@ export default function Presentation() {
       ></iframe>
     </div>
   );
-}
+};
