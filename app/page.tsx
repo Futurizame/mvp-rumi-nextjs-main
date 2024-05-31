@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import CountdownTimer from "./ui/comming-soon";
+import CountdownTimer from "./ui/countdown-timer";
+import Presentation from "./ui/presentation";
+import About from "./ui/about";
 
 export default function Home() {
   const targetDate = new Date("2024-08-31").getTime();
@@ -23,6 +25,8 @@ export default function Home() {
           alt="logo mobile version"
         />
       </div>
+      <Presentation />
+      <About />
       <CountdownTimer targetDate={targetDate} />
       <div className="mt-8">
         <Link href="about">¿Quiénes somos?</Link>
