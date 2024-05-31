@@ -10,6 +10,8 @@ export const getMongoDbRepository = (): MongoDbRepository => ({
   postPreRegisterUser: async (
     data: PreRegisterFormData,
   ): Promise<Optional<PreRegisterRemote>> => {
+    const temp = { ...data };
+
     const uri = process.env.MONGO_CONNECTION_STRING || "";
 
     const client = new MongoClient(uri);
@@ -17,7 +19,7 @@ export const getMongoDbRepository = (): MongoDbRepository => ({
     const database = client.db("rumigrow");
     const users = database.collection<PreRegisterFormData>("users");
 
-    const [ok, result, error] = await tryFn(() => users.insertOne(data, {}));
+    const [ok, result, error] = await tryFn(() => users.insertOne(temp, {}));
 
     await client.close();
 
