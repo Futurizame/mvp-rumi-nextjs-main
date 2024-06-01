@@ -104,7 +104,18 @@ const Form = () => {
           label="Nombre completo"
           value={formState.form.name}
           onChange={handleInputChange}
+          onValidate={validateFormField}
           errorMessage={formState.errors.name}
+        />
+
+        <TextInput
+          className="mb-4"
+          name="idDocument"
+          label="Documento de identidad"
+          value={formState.form.idDocument}
+          onChange={handleInputChange}
+          onValidate={validateFormField}
+          errorMessage={formState.errors.idDocument}
         />
 
         <TextInput
