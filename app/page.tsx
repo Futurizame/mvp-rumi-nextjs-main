@@ -8,9 +8,13 @@ export default function App() {
   return (
     <MainContainer>
       <Logo />
-      <Presentation />
-      <About />
-      <RedirectEarlyAccessForm />
+      <div className="flex flex-col sm:gap-20 sm:py-8">
+        <div className="sm:flex">
+          <About />
+          <Presentation />
+        </div>
+        <RedirectEarlyAccessForm />
+      </div>
     </MainContainer>
   );
 }

@@ -10,8 +10,10 @@ export const MainContainer: FC<MainContainerProps> = ({
   className,
 }) => {
   return (
-    <main className="flex flex-col items-center">
-      <div className={clsx("max-w-5xl w-full", className)}>{children}</div>
+    <main className="flex justify-center items-center px-2 ">
+      <div className={clsx("max-w-5xl w-full h-screen ", className)}>
+        {children}
+      </div>
     </main>
   );
 };
