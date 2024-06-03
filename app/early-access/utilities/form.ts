@@ -4,7 +4,7 @@ import { tryFnSync } from "../../../src/domain/shared/try-fn";
 
 export type PageState = "form" | "loading" | "success" | "error";
 
-export type FormData = {
+export type RawFormData = {
   name: string;
   email: string;
   phone: string;
@@ -14,14 +14,14 @@ export type FormData = {
   goal: string;
 };
 
-export type ErrorData = FormData;
+export type ErrorData = RawFormData;
 
 export type FormState = {
-  form: FormData;
+  form: RawFormData;
   errors: ErrorData;
 };
 
-export const initialFormData: FormData = {
+export const initialFormData: RawFormData = {
   name: "",
   email: "",
   phone: "",
@@ -64,7 +64,7 @@ export const validateFormField = (name: string, anything: string): string => {
   return error.message;
 };
 export const validateForm = (
-  formData: FormData,
+  formData: RawFormData,
 ): { errorData: ErrorData; isError: boolean } => {
   console.log(formData);
 

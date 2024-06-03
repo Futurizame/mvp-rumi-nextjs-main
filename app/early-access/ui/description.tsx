@@ -1,9 +1,8 @@
-import { FC } from "react";
-import { SectionContainer } from "../../ui/section-container";
+import React, { FC } from "react";
 
-export const FormDescription: FC = () => {
+export const Description: FC = () => {
   return (
-    <SectionContainer containerClassName={"p-4"}>
+    <>
       <h1 className={"text-primary text-xl font-bold"}>
         REGISTRO DE INVERSORES
       </h1>
@@ -12,6 +11,6 @@ export const FormDescription: FC = () => {
         compartidas, si te interesa participar registra tus datos y te
         contactaremos pronto.
       </p>
-    </SectionContainer>
+    </>
   );
 };

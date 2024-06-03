@@ -1,26 +1,21 @@
-"use client";
-
 import React, { useState, ChangeEvent, FormEvent, FC } from "react";
-import { preRegisterHandler } from "../../../src/adapter/input/pre-register";
 import { TextInput } from "./text-input";
 import {
   FormState,
   initialErrorData,
   initialFormData,
-  PageState,
+  RawFormData,
   validateForm,
   validateFormField,
 } from "../utilities/form";
-import { SectionContainer } from "../../ui/section-container";
-import { clsx } from "clsx";
 import { SelectInput } from "./select-input";
 
 type FormProps = {
   className?: string;
+  onSubmit: (formData: RawFormData) => Promise<void>;
 };
 
-export const Form: FC<FormProps> = ({ className }) => {
-  const [pageState, setPageState] = useState<PageState>("form");
+export const Form: FC<FormProps> = ({ className, onSubmit }) => {
   const [formState, setFormState] = useState<FormState>({
     form: initialFormData,
     errors: initialErrorData,
@@ -38,8 +33,6 @@ export const Form: FC<FormProps> = ({ className }) => {
       };
 
       const errorMessage = validateFormField(name, value);
-
-      console.log(newFormData);
 
       return {
         form: newFormData,
@@ -65,42 +58,16 @@ export const Form: FC<FormProps> = ({ className }) => {
       return;
     }
 
-    setPageState("loading");
-
-    const [ok] = await preRegisterHandler(formState.form);
-
-    setPageState(ok ? "success" : "error");
+    await onSubmit(formState.form);
   };
 
-  if (pageState === "loading") {
-    return (
-      <div className="text-center">
-        <p>Enviando...</p>
-      </div>
-    );
-  }
-
-  if (pageState === "success") {
-    return (
-      <div className="text-center">
-        <p>¡Gracias por registrarte!</p>
-      </div>
-    );
-  }
-
-  if (pageState === "error") {
-    return (
-      <div className="text-center">
-        <p>Ha ocurrido un error. Por favor, intenta de nuevo.</p>
-      </div>
-    );
-  }
-
   return (
-    <SectionContainer containerClassName={clsx("px-4", className)}>
+    <div className={className}>
       <form
         onSubmit={handleFormSubmit}
-        className="bg-white rounded-[40px] border-4 border-primary flex flex-col items-center"
+        className={
+          "bg-white rounded-[40px] border-4 border-primary flex flex-col items-center"
+        }
       >
         <h1 className="text-center font-bold text-2xl pt-4">
           Registro de Inversores
@@ -178,7 +145,7 @@ export const Form: FC<FormProps> = ({ className }) => {
 
         <SelectInput
           className="max-w-2xl w-full px-8 pt-4"
-          name={"investmentGoal"}
+          name={"goal"}
           label={"Objetivo de inversión"}
           value={formState.form.goal}
           onChange={handleInputChange}
@@ -199,6 +166,6 @@ export const Form: FC<FormProps> = ({ className }) => {
           </button>
         </div>
       </form>
-    </SectionContainer>
+    </div>
   );
 };
