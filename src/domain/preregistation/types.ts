@@ -3,8 +3,8 @@ export type PreRegisterFormData = {
   email: string;
   phone: string;
   idDocument: string;
-  investmentQuantity: number;
-  investmentTime: number;
+  investmentQuantity: string;
+  investmentTime: string;
   goal: string;
 };
 

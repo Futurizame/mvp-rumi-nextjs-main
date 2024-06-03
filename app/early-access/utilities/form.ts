@@ -1,4 +1,4 @@
-import { number, object, ObjectSchema, string, ValidationError } from "yup";
+import { object, ObjectSchema, string, ValidationError } from "yup";
 import { PreRegisterFormData } from "../../../src/domain/preregistation/types";
 import { tryFnSync } from "../../../src/domain/shared/try-fn";
 
@@ -40,24 +40,14 @@ export const formSchema: ObjectSchema<PreRegisterFormData> = object({
     .required("El correo electrónico es requerido"),
   phone: string().required("El número de teléfono es requerido"),
   idDocument: string().required("El documento de identidad es requerido"),
-  investmentQuantity: number()
+  investmentQuantity: string()
     .typeError("La cantidad de inversión debe ser un número")
-    .positive("La cantidad de inversión debe ser positiva")
     .required("La cantidad de inversión es requerida"),
-  investmentTime: number()
+  investmentTime: string()
     .typeError("El plazo de inversión debe ser un número")
-    .positive("El plazo de inversión debe ser positivo")
     .required("El plazo de inversión es requerido"),
   goal: string().required("El objetivo de inversión es requerido"),
 }).strict();
-
-export const mapToPreRegisterFormData = (
-  formData: FormData,
-): PreRegisterFormData => ({
-  ...formData,
-  investmentQuantity: Number(formData.investmentQuantity),
-  investmentTime: Number(formData.investmentTime),
-});
 
 export const isValidationError = (error: unknown): error is ValidationError =>
   error instanceof ValidationError;
@@ -76,12 +66,10 @@ export const validateFormField = (name: string, anything: string): string => {
 export const validateForm = (
   formData: FormData,
 ): { errorData: ErrorData; isError: boolean } => {
-  const earlyAccessFormData = mapToPreRegisterFormData(formData);
-
-  console.log(earlyAccessFormData);
+  console.log(formData);
 
   const [ok, , error] = tryFnSync(() =>
-    formSchema.validateSync(earlyAccessFormData, { abortEarly: false }),
+    formSchema.validateSync(formData, { abortEarly: false }),
   );
 
   if (ok) {
