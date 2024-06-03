@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export const Logo: FC = () => {
   return (
-    <section className="p-4 bg-slate-100">
+    <section className="p-4 ">
       <Image
         src="/logo.png"
         width={250}
