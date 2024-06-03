@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent, FC } from "react";
 import { preRegisterHandler } from "../../../src/adapter/input/pre-register";
 import { TextInput } from "./text-input";
 import {
@@ -11,8 +11,15 @@ import {
   validateForm,
   validateFormField,
 } from "../utilities/form";
+import { SectionContainer } from "../../ui/section-container";
+import { clsx } from "clsx";
+import { SelectInput } from "./select-input";
 
-const Form = () => {
+type FormProps = {
+  className?: string;
+};
+
+export const Form: FC<FormProps> = ({ className }) => {
   const [pageState, setPageState] = useState<PageState>("form");
   const [formState, setFormState] = useState<FormState>({
     form: initialFormData,
@@ -90,14 +97,17 @@ const Form = () => {
   }
 
   return (
-    <form
-      onSubmit={handleFormSubmit}
-      className="flex  flex-col   bg-white rounded-xl shadow-md overflow-hidden border-4 border-900 py-4"
-    >
-      <h1 className="text-center font-bold text-900">Registro de Inversores</h1>
-      <div className="rounded-md  p-4 flex flex-col">
+    <SectionContainer containerClassName={clsx("px-4", className)}>
+      <form
+        onSubmit={handleFormSubmit}
+        className="bg-white rounded-[40px] border-4 border-primary flex flex-col items-center"
+      >
+        <h1 className="text-center font-bold text-2xl pt-4">
+          Registro de Inversores
+        </h1>
+
         <TextInput
-          className="mb-4"
+          className="max-w-2xl w-full px-8 pt-4"
           name="name"
           label="Nombre completo"
           value={formState.form.name}
@@ -107,7 +117,7 @@ const Form = () => {
         />
 
         <TextInput
-          className="mb-4"
+          className="max-w-2xl w-full px-8 pt-4"
           name="idDocument"
           label="Documento de identidad"
           value={formState.form.idDocument}
@@ -117,7 +127,7 @@ const Form = () => {
         />
 
         <TextInput
-          className="mb-4"
+          className="max-w-2xl w-full px-8 pt-4"
           name="email"
           label="Correo electrónico"
           value={formState.form.email}
@@ -127,7 +137,7 @@ const Form = () => {
         />
 
         <TextInput
-          className="mb-4"
+          className="max-w-2xl w-full px-8 pt-4"
           name="phone"
           label="Número de teléfono"
           value={formState.form.phone}
@@ -136,102 +146,59 @@ const Form = () => {
           errorMessage={formState.errors.phone}
         />
 
-        <div className="mb-4">
-          <label
-            htmlFor="investmentQuantity"
-            className="block text-sm font-medium"
-          >
-            Cantidad disponible para invertir
-          </label>
-          <select
-            id="investmentQuantity"
-            name="investmentQuantity"
-            value={formState.form.investmentQuantity}
-            onChange={handleInputChange}
-            onBlur={(e) =>
-              validateFormField("investmentQuantity", e.target.value)
-            }
-            className={`mt-1 block w-full px-3 py-2 bg-white border ${
-              formState.errors.investmentQuantity
-                ? "border-red-600"
-                : "border-gray-300"
-            } rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500`}
-          >
-            <option value="">Seleccione una opción</option>
-            <option value="menor a USD$ 300">menor a USD$ 300 </option>
-            <option value="USD$ 300">USD$ 300</option>
-            <option value="USD$ 500">USD$ 500</option>
-            <option value="USD$ 1 000">USD$ 1 000</option>
-            <option value="mayor a USD$ 1 000">mayor a USD$ 1 000</option>
-          </select>
-          {formState.errors.investmentQuantity && (
-            <p className="text-red-600 text-sm">
-              {formState.errors.investmentQuantity}
-            </p>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="investmentTime" className="block text-sm font-medium">
-            Plazo de inversión (en años)
-          </label>
-          <select
-            id="investmentTime"
-            name="investmentTime"
-            value={formState.form.investmentTime}
-            onChange={handleInputChange}
-            onBlur={(e) => validateFormField("investmentTime", e.target.value)}
-            className={`mt-1 block w-full px-3 py-2 bg-white border ${
-              formState.errors.investmentTime
-                ? "border-red-600"
-                : "border-gray-300"
-            } rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500`}
-          >
-            <option value="">Seleccione una opción</option>
-            <option value="3 años">3 años </option>
-            <option value="5 años">5 años</option>
-            <option value="6 años">6 años</option>
-          </select>
-          {formState.errors.investmentTime && (
-            <p className="text-red-600 text-sm">
-              {formState.errors.investmentTime}
-            </p>
-          )}
-        </div>
-        {/* Campo para el objetivo de inversión */}
-        <div className="mb-4">
-          <label htmlFor="investmentGoal" className="block text-sm font-medium">
-            Objetivo de inversión
-          </label>
-          <select
-            id="investmentGoal"
-            name="goal"
-            value={formState.form.goal}
-            onChange={handleInputChange}
-            onBlur={(e) => validateFormField("goal", e.target.value)}
-            className={`mt-1 block w-full px-3 py-2 bg-white border ${
-              formState.errors.goal ? "border-red-600" : "border-gray-300"
-            } rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500`}
-          >
-            <option value="">Seleccione una opción</option>
-            <option value="income">Ingresos pasivos</option>
-            <option value="appreciation">Plusvalía</option>
-            <option value="both">Ambos</option>
-          </select>
-          {formState.errors.goal && (
-            <p className="text-red-600 text-sm">{formState.errors.goal}</p>
-          )}
-        </div>
-
-        <button
-          type="submit"
-          className="bg-gradient-to-r from-500 to-600 text-white py-2 px-4 rounded-md hover:from-600 hover:to-700"
+        <SelectInput
+          className="max-w-2xl w-full px-8 pt-4"
+          name={"investmentQuantity"}
+          label={"Cantidad disponible para invertir"}
+          value={formState.form.investmentQuantity}
+          onChange={handleInputChange}
+          errorMessage={formState.errors.investmentQuantity}
         >
-          Enviar
-        </button>
-      </div>
-    </form>
+          <option value="">Seleccione una opción</option>
+          <option value="menor a USD$ 300">menor a USD$ 300</option>
+          <option value="USD$ 300">USD$ 300</option>
+          <option value="USD$ 500">USD$ 500</option>
+          <option value="USD$ 1 000">USD$ 1 000</option>
+          <option value="mayor a USD$ 1 000">mayor a USD$ 1 000</option>
+        </SelectInput>
+
+        <SelectInput
+          className="max-w-2xl w-full px-8 pt-4"
+          name={"investmentTime"}
+          label={"Plazo de inversión (en años)"}
+          value={formState.form.investmentTime}
+          onChange={handleInputChange}
+          errorMessage={formState.errors.investmentTime}
+        >
+          <option value="">Seleccione una opción</option>
+          <option value="3 años">3 años</option>
+          <option value="5 años">5 años</option>
+          <option value="6 años">6 años</option>
+        </SelectInput>
+
+        <SelectInput
+          className="max-w-2xl w-full px-8 pt-4"
+          name={"investmentGoal"}
+          label={"Objetivo de inversión"}
+          value={formState.form.goal}
+          onChange={handleInputChange}
+          errorMessage={formState.errors.goal}
+        >
+          <option value="">Seleccione una opción</option>
+          <option value="income">Ingresos pasivos</option>
+          <option value="appreciation">Plusvalía</option>
+          <option value="both">Ambos</option>
+        </SelectInput>
+
+        <div className="max-w-2xl w-full px-8 py-8">
+          <button
+            type="submit"
+            className="w-full bg-primary py-2 px-8 font-bold text-lg text-white rounded-full"
+          >
+            Enviar
+          </button>
+        </div>
+      </form>
+    </SectionContainer>
   );
 };
-
-export default Form;
