@@ -24,13 +24,14 @@ export const AboutUs: FC = () => {
 
       <h2 className={"text-primary text-xl font-bold pt-8"}>¿QUÉ OFRECEMOS?</h2>
 
-      <p className="text-text font-bold text-xl pt-2">
-        <ul className={"list-disc pl-4 pb-4"}>
-          <li>Oportunidades de inversión diversificadas</li>
-          <li>Proceso de inversión sencillo</li>
-          <li>Tasas justas (más bajas del mercado)</li>
-          <li>Equipo experimentado en el mercado inmobiliario</li>
-        </ul>
+      <ul className={"text-text font-bold text-xl list-disc pl-4 pt-2 pb-4"}>
+        <li>Oportunidades de inversión diversificadas</li>
+        <li>Proceso de inversión sencillo</li>
+        <li>Tasas justas (más bajas del mercado)</li>
+        <li>Equipo experimentado en el mercado inmobiliario</li>
+      </ul>
+
+      <p className="text-text font-bold text-xl">
         Estamos apasionados por ayudar a las personas a alcanzar sus sueños
         financieros y sabemos que las inversiones inmobiliarias son una
         excelente manera de hacerlo porque son inversiones estables y de bajo
