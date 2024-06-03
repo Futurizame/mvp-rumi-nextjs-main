@@ -1,17 +1,14 @@
 import React, { FC } from "react";
+import { SectionContainer } from "./section-container";
 
 export const Presentation: FC = () => {
   return (
-    <div className="max-w-sm sm:max-w-md mx-auto">
-      <iframe
-        className="w-full aspect-video "
-        src="https://www.youtube.com/embed/cizFKf09-qA"
-        title="Qué es RumiGrow"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        referrerPolicy="strict-origin-when-cross-origin"
-        allowFullScreen
-        aria-hidden="true"
-      ></iframe>
-    </div>
+    <SectionContainer containerClassName="p-4">
+      <h1>INVIERSIONES COMPARTIDAS INMOBILIARIAS</h1>
+      <p className="text-gray-500">
+        Con Rumigrow puedes hacer microinversiones compartidas para proyectos
+        inmobiliarios y gozar de rentas y plusvalías
+      </p>
+    </SectionContainer>
   );
 };

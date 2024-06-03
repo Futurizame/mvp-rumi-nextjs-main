@@ -1,20 +1,15 @@
-import { MainContainer } from "./ui/main-container";
-import { RedirectEarlyAccessForm } from "./ui/redirect-early-access-form";
 import { Logo } from "./ui/logo";
+import { TutorialVideo } from "./ui/tutorial-video";
 import { Presentation } from "./ui/presentation";
-import { About } from "./ui/about";
+import { AboutUs } from "./ui/about-us";
 
 export default function App() {
   return (
-    <MainContainer>
+    <main>
       <Logo />
-      <div className="flex flex-col sm:gap-20 sm:py-8">
-        <div className="sm:flex">
-          <About />
-          <Presentation />
-        </div>
-        <RedirectEarlyAccessForm />
-      </div>
-    </MainContainer>
+      <Presentation />
+      <TutorialVideo />
+      <AboutUs />
+    </main>
   );
 }
