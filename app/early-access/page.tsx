@@ -1,13 +1,11 @@
 import { Logo } from "../ui/logo";
-import { Form } from "./ui/form";
-import { FormDescription } from "./ui/form-description";
+import { FormContainer } from "./ui/form-container/form-container";
 
 export default function EarlyAccess() {
   return (
     <main>
       <Logo />
-      <FormDescription />
-      <Form className={"pt-4"} />
+      <FormContainer />
     </main>
   );
 }
