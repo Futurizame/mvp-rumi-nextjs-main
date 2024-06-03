@@ -25,6 +25,8 @@ const config: Config = {
         "800": "#1856b5",
         "900": "#16417c",
         "950": "#142f57",
+        primary: "#7F7F7F",
+        background: "#edf7eb",
       },
     },
   },
