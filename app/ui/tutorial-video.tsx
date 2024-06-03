@@ -1,14 +1,14 @@
 import React, { FC } from "react";
 import { SectionContainer } from "./section-container";
-import Link from "next/link";
+import { RedirectButton } from "./redirect-button";
 
 export const TutorialVideo: FC = () => {
   return (
     <SectionContainer
-      containerClassName={"p-4 bg-green-50"}
-      className={"flex flex-col gap-4"}
+      containerClassName={"p-4 pb-8 bg-accent"}
+      className={"flex flex-col"}
     >
-      <h2>¿CÓMO FUNCIONA?</h2>
+      <h2 className={"text-primary text-xl font-bold pb-8"}>¿CÓMO FUNCIONA?</h2>
 
       <iframe
         className="w-full aspect-video"
@@ -19,12 +19,7 @@ export const TutorialVideo: FC = () => {
         aria-hidden="true"
       ></iframe>
 
-      <Link
-        href={"early-access"}
-        className={"w-max bg-sky-700 text-white py-4 px-8 rounded-full"}
-      >
-        ¡Quiero invertir!
-      </Link>
+      <RedirectButton className={"pt-8 self-center"} />
     </SectionContainer>
   );
 };

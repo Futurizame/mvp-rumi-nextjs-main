@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html[data-theme='default'] {
+    --color-primary: #16417C;
+    --color-secondary: #47D45A;
+    --color-text: #7F7F7F;
+    --color-accent: #f0fdf4;
+  }
+}
+
 input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;

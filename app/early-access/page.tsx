@@ -3,7 +3,7 @@ import Form from "./ui/form";
 
 export default function EarlyAccess() {
   return (
-    <main className="h-full flex justify-center items-center  bg-background  ">
+    <main className="h-svh flex justify-center items-center  bg-background  ">
       <div className=" max-w-md  p-2 md:py-4">
         <Logo />
         <div className="flex flex-col gap-4 py-4 ">
