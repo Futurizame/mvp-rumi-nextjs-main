@@ -4,8 +4,8 @@ import { FormContainer } from "./ui/form-container/form-container";
 export default function EarlyAccess() {
   return (
     <main>
-      <Logo />
-      <FormContainer />
+      <Logo redirect={"/"} />
+      <FormContainer />;
     </main>
   );
 }

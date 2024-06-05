@@ -1,11 +1,28 @@
 import { FC } from "react";
 import Image from "next/image";
 import { SectionContainer } from "./section-container";
+import image from "./logo.png";
+import Link from "next/link";
 
-export const Logo: FC = () => {
+type LogoProps = {
+  redirect?: string;
+};
+
+// TODO: Change to toolbar
+export const Logo: FC<LogoProps> = ({ redirect }) => {
+  if (redirect !== undefined) {
+    return (
+      <SectionContainer containerClassName="p-4">
+        <Link href={redirect} className={"block w-max"}>
+          <Image src={image} alt="logo rumigrow" width={250} />
+        </Link>
+      </SectionContainer>
+    );
+  }
+
   return (
     <SectionContainer containerClassName="p-4">
-      <Image src="/logo.png" width={250} height={150} alt="logo rumigrow" />
+      <Image src={image} alt="logo rumigrow" width={250} />
     </SectionContainer>
   );
 };
