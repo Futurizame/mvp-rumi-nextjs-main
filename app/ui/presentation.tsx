@@ -7,7 +7,7 @@ export const Presentation: FC = () => {
       <h1 className={"text-4xl font-bold text-secondary"}>
         INVIERSIONES COMPARTIDAS INMOBILIARIAS
       </h1>
-      <p className="text-text pt-8 font-bold text-xl">
+      <p className="text-text pt-8 font-bold text-lg">
         Con Rumigrow puedes hacer microinversiones compartidas para proyectos
         inmobiliarios y gozar de rentas y plusvalías
       </p>

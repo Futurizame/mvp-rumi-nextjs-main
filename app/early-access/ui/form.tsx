@@ -66,7 +66,7 @@ export const Form: FC<FormProps> = ({ className, onSubmit }) => {
       <form
         onSubmit={handleFormSubmit}
         className={
-          "bg-white rounded-[40px] border-4 border-primary flex flex-col items-center"
+          "bg-background rounded-[40px] border-4 border-primary flex flex-col items-center"
         }
       >
         <h1 className="text-center font-bold text-2xl pt-4">
