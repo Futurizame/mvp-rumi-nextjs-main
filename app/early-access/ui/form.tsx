@@ -9,6 +9,7 @@ import {
   validateFormField,
 } from "../utilities/form";
 import { SelectInput } from "./select-input";
+import { InterestRates } from "./interest-rates";
 
 type FormProps = {
   className?: string;
@@ -156,7 +157,7 @@ export const Form: FC<FormProps> = ({ className, onSubmit }) => {
           <option value="appreciation">Plusvalía</option>
           <option value="both">Ambos</option>
         </SelectInput>
-
+        <InterestRates />
         <div className="max-w-2xl w-full px-8 py-8">
           <button
             type="submit"
