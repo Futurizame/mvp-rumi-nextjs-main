@@ -17,7 +17,7 @@ export const Footer = () => {
       <div className={"flex flex-col gap-3"}>
         <h6 className={"font-bold"}>Contacto</h6>
         <h6>contacto@rumigrow.com</h6>
-        <h6>999 999 999</h6>
+        <h6>(+51) 976 769 038</h6>
       </div>
     </SectionContainer>
   );

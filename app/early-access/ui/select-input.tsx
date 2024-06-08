@@ -1,4 +1,5 @@
 import { ChangeEvent, FC, PropsWithChildren } from "react";
+import { clsx } from "clsx";
 
 type FormInputProps = PropsWithChildren & {
   className?: string;
@@ -28,9 +29,11 @@ export const SelectInput: FC<FormInputProps> = ({
         name={name}
         value={value}
         onChange={onChange}
-        className={`mt-1 block w-full px-3 py-2 bg-white border ${
-          errorMessage ? "border-red-600" : "border-gray-300"
-        } rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-900 focus:ring-1 focus:ring-900`}
+        className={clsx(
+          "mt-1 block w-full px-3 py-2 bg-white border rounded-md text-sm shadow-sm placeholder-gray-400",
+          "focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary",
+          errorMessage ? "border-red-600" : "border-gray-300",
+        )}
       >
         {children}
       </select>
