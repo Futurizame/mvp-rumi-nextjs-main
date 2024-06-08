@@ -12,7 +12,7 @@ export const TutorialVideo: FC = () => {
 
       <iframe
         className="w-full aspect-video"
-        src="https://www.youtube.com/embed/cizFKf09-qA"
+        src="https://www.youtube.com/embed/ResOwdH_k_U"
         title="Qué es RumiGrow"
         referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen
