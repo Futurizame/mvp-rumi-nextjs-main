@@ -27,7 +27,12 @@ export const Form: FC<FormProps> = ({ className, onSubmit }) => {
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = event.target;
-
+    if (
+      (name === "phone" && value.length > 9) ||
+      (name === "idDocument" && value.length > 8)
+    ) {
+      return;
+    }
     setFormState((previousFormState) => {
       const newFormData = {
         ...previousFormState.form,
