@@ -3,7 +3,7 @@ import { InterestRateRow } from "./interest-rate-row";
 
 export const InterestRates: FC = () => {
   const interestRates = [
-    { entity: "Entidades", rate: "Tasas" },
+    { entity: "Entidades", rate: "Tasas anuales" },
     { entity: "Rumigrow", rate: "5.46%" },
     { entity: "BBVA*", rate: "0.75%" },
     { entity: "BCP*", rate: "0.25%" },
@@ -11,10 +11,8 @@ export const InterestRates: FC = () => {
   ];
 
   return (
-    <div className="max-w-2xl w-full px-8 pt-4">
-      <h2 className="font-medium text-lg pl-4">
-        Tasas de interés anual ofrecido:
-      </h2>
+    <div className="max-w-2xl w-full px-8 pt-8">
+      <h2 className="font-medium pl-4">Tasas de interés anual ofrecido:</h2>
       <div className="flex flex-col gap-2">
         {interestRates.map((item, index) => (
           <InterestRateRow
