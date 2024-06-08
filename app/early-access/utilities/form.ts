@@ -38,8 +38,18 @@ export const formSchema: ObjectSchema<PreRegisterFormData> = object({
   email: string()
     .email("Formato de correo electrónico inválido")
     .required("El correo electrónico es requerido"),
-  phone: string().required("El número de teléfono es requerido"),
-  idDocument: string().required("El documento de identidad es requerido"),
+  phone: string()
+    .matches(
+      /^\d{9}$/,
+      "El número de teléfono debe tener 9 dígitos y solo contener números",
+    )
+    .required("El número de teléfono es requerido"),
+  idDocument: string()
+    .matches(
+      /^\d{8}$/,
+      "El documento de identidad debe tener 8 dígitos y solo contener números",
+    )
+    .required("El documento de identidad es requerido"),
   investmentQuantity: string()
     .typeError("La cantidad de inversión debe ser un número")
     .required("La cantidad de inversión es requerida"),
