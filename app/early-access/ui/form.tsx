@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent, FC } from "react";
+import { sendGAEvent } from "@next/third-parties/google";
 import { TextInput } from "./text-input";
 import {
   FormState,
@@ -64,7 +65,7 @@ export const Form: FC<FormProps> = ({ className, onSubmit }) => {
 
       return;
     }
-
+    sendGAEvent({ event: "formSubmitted", value: "Formulario de inversión" });
     await onSubmit(formState.form);
   };
 
